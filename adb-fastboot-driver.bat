@@ -1,10 +1,10 @@
 @echo off
 chcp 65001 >nul
-title ROM Flasher - Ultimate Driver ^& ADB Setup v3.0 [Pro Edition]
+title ROM Flasher - Ultimate Driver ^& ADB Setup v4.0 [Pro Edition]
 color 0b
 
 :: ==============================================================================
-:: ROM Flasher - Ultimate Driver & ADB Setup Tool v3.0 (Pro Edition)
+:: ROM Flasher - Ultimate Driver & ADB Setup Tool v4.0 (Pro Edition)
 :: Architected & Upgraded for Rohit Bhai / ROM Flasher YouTube
 :: Target: Windows 11, Windows 10, Windows 8.1, Windows 7 (x64 / x86)
 :: ==============================================================================
@@ -34,11 +34,11 @@ echo   ██████╔╝██║   ██║██╔████╔█�
 echo   ██╔══██╗██║   ██║██║╚██╔╝██║    ██╔══╝  ██║     ██╔══██║╚════██║██╔══██║
 echo   ██║  ██║╚██████╔╝██║ ╚═╝ ██║    ██║     ███████╗██║  ██║███████║██║  ██║
 echo   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-echo                  ULTIMATE DRIVER ^& ADB SETUP v3.0 [PRO]
+echo                  ULTIMATE DRIVER ^& ADB SETUP v4.0 [PRO]
 echo                        Crafted for Rohit Bhai
 echo ==============================================================================
 echo  Support: Xiaomi, Poco, Redmi, Vivo, Oppo, Realme, OnePlus, Samsung, MTK, QCOM
-echo  Modes  : ADB, Fastboot, Fastbootd, Recovery, Qualcomm 9008 EDL, MediaTek BROM
+echo  Features: Auto-ADB, Dual-Slot Switcher, Magisk Flasher, Fastbootd, EDL 9008
 echo ==============================================================================
 echo.
 
@@ -84,8 +84,6 @@ set "SB_STATUS=%errorlevel%"
 if "%SB_STATUS%"=="2" (
     echo [INFO] UEFI Secure Boot is ENABLED on this PC.
     echo        Standard drivers (Google ADB, Samsung, Fastboot) will install normally.
-    echo        For unsigned MTK BROM or QCOM 9008, Secure Boot may require temporary
-    echo        disable in BIOS if Windows blocks legacy unsigned drivers.
 ) else (
     echo [*] Configuring Driver Integrity Settings for MTK / Qualcomm Dead Mode...
     bcdedit /set nointegritychecks on >nul 2>&1
@@ -101,10 +99,7 @@ echo [*] Setting up latest Google Platform Tools (ADB ^& Fastboot)...
 if not exist "C:\adb" mkdir "C:\adb" >nul 2>&1
 
 set "PT_ZIP=%TEMP%\platform-tools-latest.zip"
-set "PT_DIR=%TEMP%\platform-tools-extracted"
-
 if exist "%PT_ZIP%" del /f /q "%PT_ZIP%" >nul 2>&1
-if exist "%PT_DIR%" rmdir /s /q "%PT_DIR%" >nul 2>&1
 
 echo [*] Downloading latest Platform Tools from Google CDN...
 powershell -NoProfile -Command "$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://dl.google.com/android/repository/platform-tools-latest-windows.zip' -OutFile '%PT_ZIP%' -UseBasicParsing"
@@ -196,8 +191,6 @@ if "!SAMSUNG_INSTALLED!"=="0" (
         echo [*] Running Samsung Driver silent installation...
         start /wait "" "%SAMSUNG_EXE%" /SILENT
         echo [OK] Samsung USB Driver installed!
-    ) else (
-        echo [INFO] Samsung driver installer queued.
     )
 ) else (
     echo [OK] Samsung Official Mobile Driver installed!
@@ -205,79 +198,75 @@ if "!SAMSUNG_INSTALLED!"=="0" (
 echo.
 
 :: ------------------------------------------------------------------------------
-:: 9. Qualcomm QDLoader 9008 (EDL Mode) ^& MediaTek (MTK BROM) Driver Packs
+:: 9. Generate Desktop Interactive ROM Flasher Toolkit v4.0 Ultimate
 :: ------------------------------------------------------------------------------
-echo [*] Installing Qualcomm QDLoader 9008 ^& MediaTek VCOM Driver Support...
-echo     (Enables Dead Boot Repair, EDL 9008 Flashing ^& MTK SP Flash Tool detection)
-
-set "EXTRA_DIR=%TEMP%\romflasher_drivers"
-if not exist "%EXTRA_DIR%" mkdir "%EXTRA_DIR%" >nul 2>&1
-
-:: Create Auto-Driver Install Script for MTK & Qualcomm
-powershell -NoProfile -Command ^
-    "$extraDir = '%EXTRA_DIR%';" ^
-    "Write-Host '  [*] Checking system architecture:' ([Environment]::Is64BitOperatingSystem ? 'x64' : 'x86');"
-echo [OK] Qualcomm ^& MediaTek driver protocols registered!
-echo.
-
-:: ------------------------------------------------------------------------------
-:: 10. Generate Desktop Interactive ROM Flasher Toolkit v3.0
-:: ------------------------------------------------------------------------------
-echo [*] Generating ROM Flasher Toolkit v3.0 on Desktop...
+echo [*] Generating ROM Flasher Toolkit v4.0 Ultimate on Desktop...
 set "SHORTCUT=%USERPROFILE%\Desktop\ROM_Flasher_Toolkit.bat"
 
 (
 echo @echo off
 echo chcp 65001 ^>nul
-echo title ROM Flasher - Professional Device Toolkit v3.0
+echo title ROM Flasher - Professional Device Toolkit v4.0 Ultimate
 echo color 0b
 echo :menu
 echo cls
 echo ==============================================================================
-echo           ROM FLASHER - PROFESSIONAL DEVICE TOOLKIT v3.0
+echo       ROM FLASHER - PROFESSIONAL DEVICE TOOLKIT v4.0 [ULTIMATE]
 echo                     Crafted for Rohit Bhai
 echo ==============================================================================
 echo.
 echo  --- [1] ADB STATUS ^& DEVICE INFO ---
-echo   1. Check Connected ADB Devices
-echo   2. View Real-Time Device Battery ^& Model Info
+echo   1. Check Connected ADB Devices (Detailed with Serial)
+echo   2. View Real-Time Device Battery, Model ^& Android Version
 echo   3. Restart ADB Server (Fix Device Not Detected)
+echo   4. Install APK directly to Device (Drag ^& Drop)
 echo.
-echo  --- [2] FASTBOOT ^& BOOTLOADER ---
-echo   4. Check Fastboot Devices
-echo   5. Check Bootloader Lock/Unlock Status
-echo   6. Check if Device is in Fastbootd (Dynamic Partitions)
+echo  --- [2] FASTBOOT, DUAL SLOTS ^& ROOTING ---
+echo   5. Check Fastboot Devices
+echo   6. Check Bootloader Lock/Unlock Status
+echo   7. Check if Device is in Fastbootd (Dynamic Partitions)
+echo   8. Dual Slot Fixer: Check Active Slot (A/B)
+echo   9. Switch to Slot A (fastboot set_active a)
+echo  10. Switch to Slot B (fastboot set_active b)
+echo  11. 1-Click Root Flasher (Drag ^& Drop boot.img / init_boot.img)
 echo.
-echo  --- [3] REBOOT CONTROLS ---
-echo   7. Reboot Device to System
-echo   8. Reboot Device to Recovery Mode
-echo   9. Reboot Device to Fastboot / Bootloader
-echo  10. Reboot Device to Fastbootd Mode (Android 10+)
-echo  11. Reboot Device to Qualcomm EDL 9008 (Dead/Unbrick Mode)
+echo  --- [3] REBOOT ENGINE ---
+echo  12. Reboot Device to System (Normal)
+echo  13. Reboot Device to Recovery Mode (TWRP/OrangeFox/Stock)
+echo  14. Reboot Device to Fastboot / Bootloader
+echo  15. Reboot Device to Fastbootd Mode (Android 10+)
+echo  16. Reboot Device to Qualcomm EDL 9008 (Dead Boot Repair)
 echo.
-echo  --- [4] FLASHING TOOLS ---
-echo  12. Sideload ROM / Update Package (adb sideload)
-echo  13. Open Elevated CMD at C:\adb
-echo  14. Driver Doctor: Open Windows Device Manager
-echo  15. Exit Toolkit
+echo  --- [4] FLASHING UTILITIES ---
+echo  17. Factory Reset / Wipe Data (fastboot -w / unbrick bootloop)
+echo  18. Sideload ROM / Update Package (adb sideload)
+echo  19. Open Elevated CMD at C:\adb
+echo  20. Driver Doctor: Open Windows Device Manager
+echo  21. Exit Toolkit
 echo ==============================================================================
 echo.
-echo set /p choice="Enter your choice (1-15): "
+echo set /p choice="Enter your choice (1-21): "
 echo if "%%choice%%"=="1" ( cls ^& echo [*] Checking ADB Devices... ^& adb devices -l ^& echo. ^& pause ^& goto menu )
-echo if "%%choice%%"=="2" ( cls ^& echo [*] Fetching Device Info... ^& adb shell getprop ro.product.model ^& adb shell dumpsys battery ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="2" ( cls ^& echo [*] Fetching Device Info... ^& echo Model: ^& adb shell getprop ro.product.model ^& echo Android Ver: ^& adb shell getprop ro.build.version.release ^& echo Battery: ^& adb shell dumpsys battery ^& echo. ^& pause ^& goto menu )
 echo if "%%choice%%"=="3" ( cls ^& echo [*] Restarting ADB Server... ^& adb kill-server ^& adb start-server ^& echo [OK] Server reset! ^& pause ^& goto menu )
-echo if "%%choice%%"=="4" ( cls ^& echo [*] Checking Fastboot Devices... ^& fastboot devices ^& echo. ^& pause ^& goto menu )
-echo if "%%choice%%"=="5" ( cls ^& echo [*] Checking Bootloader Status... ^& fastboot oem device-info 2^>^&1 ^& fastboot getvar unlocked 2^>^&1 ^& echo. ^& pause ^& goto menu )
-echo if "%%choice%%"=="6" ( cls ^& echo [*] Checking Fastbootd userspace... ^& fastboot getvar is-userspace 2^>^&1 ^& echo. ^& pause ^& goto menu )
-echo if "%%choice%%"=="7" ( cls ^& echo [*] Rebooting to System... ^& adb reboot 2^>nul ^|^| fastboot reboot ^& pause ^& goto menu )
-echo if "%%choice%%"=="8" ( cls ^& echo [*] Rebooting to Recovery... ^& adb reboot recovery 2^>nul ^|^| fastboot reboot recovery ^& pause ^& goto menu )
-echo if "%%choice%%"=="9" ( cls ^& echo [*] Rebooting to Bootloader... ^& adb reboot bootloader ^& pause ^& goto menu )
-echo if "%%choice%%"=="10" ( cls ^& echo [*] Rebooting to Fastbootd... ^& fastboot reboot fastboot ^& pause ^& goto menu )
-echo if "%%choice%%"=="11" ( cls ^& echo [*] Rebooting to EDL 9008... ^& adb reboot edl 2^>nul ^|^| fastboot oem edl 2^>nul ^|^| fastboot reboot-edl 2^>nul ^& pause ^& goto menu )
-echo if "%%choice%%"=="12" ( cls ^& set /p zip="Drag and Drop ROM zip here: " ^& adb sideload %%zip%% ^& pause ^& goto menu )
-echo if "%%choice%%"=="13" ( start cmd.exe /k "cd /d C:\adb" ^& goto menu )
-echo if "%%choice%%"=="14" ( start devmgmt.msc ^& goto menu )
-echo if "%%choice%%"=="15" ( exit )
+echo if "%%choice%%"=="4" ( cls ^& set /p apk="Drag and Drop APK file here: " ^& adb install -r %%apk%% ^& pause ^& goto menu )
+echo if "%%choice%%"=="5" ( cls ^& echo [*] Checking Fastboot Devices... ^& fastboot devices ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="6" ( cls ^& echo [*] Checking Bootloader Status... ^& fastboot oem device-info 2^>^&1 ^& fastboot getvar unlocked 2^>^&1 ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="7" ( cls ^& echo [*] Checking Fastbootd userspace... ^& fastboot getvar is-userspace 2^>^&1 ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="8" ( cls ^& echo [*] Current Active Slot: ^& fastboot getvar current-slot 2^>^&1 ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="9" ( cls ^& echo [*] Switching to Slot A... ^& fastboot set_active a ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="10" ( cls ^& echo [*] Switching to Slot B... ^& fastboot set_active b ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="11" ( cls ^& set /p bimg="Drag and Drop boot.img or init_boot.img here: " ^& echo Flashing boot... ^& fastboot flash boot %%bimg%% 2^>nul ^|^| fastboot flash init_boot %%bimg%% ^& echo. ^& pause ^& goto menu )
+echo if "%%choice%%"=="12" ( cls ^& echo [*] Rebooting to System... ^& adb reboot 2^>nul ^|^| fastboot reboot ^& pause ^& goto menu )
+echo if "%%choice%%"=="13" ( cls ^& echo [*] Rebooting to Recovery... ^& adb reboot recovery 2^>nul ^|^| fastboot reboot recovery ^& pause ^& goto menu )
+echo if "%%choice%%"=="14" ( cls ^& echo [*] Rebooting to Bootloader... ^& adb reboot bootloader ^& pause ^& goto menu )
+echo if "%%choice%%"=="15" ( cls ^& echo [*] Rebooting to Fastbootd... ^& fastboot reboot fastboot ^& pause ^& goto menu )
+echo if "%%choice%%"=="16" ( cls ^& echo [*] Rebooting to EDL 9008... ^& adb reboot edl 2^>nul ^|^| fastboot oem edl 2^>nul ^|^| fastboot reboot-edl 2^>nul ^& pause ^& goto menu )
+echo if "%%choice%%"=="17" ( cls ^& echo [!] WARNING: This will wipe all user data to fix bootloop! ^& set /p confirm="Are you sure? (Y/N): " ^& if /i "%%confirm%%"=="Y" ( fastboot -w 2^>nul ^|^| fastboot erase userdata ) ^& pause ^& goto menu )
+echo if "%%choice%%"=="18" ( cls ^& set /p zip="Drag and Drop ROM zip here: " ^& adb sideload %%zip%% ^& pause ^& goto menu )
+echo if "%%choice%%"=="19" ( start cmd.exe /k "cd /d C:\adb" ^& goto menu )
+echo if "%%choice%%"=="20" ( start devmgmt.msc ^& goto menu )
+echo if "%%choice%%"=="21" ( exit )
 echo goto menu
 ) > "%SHORTCUT%"
 
@@ -285,43 +274,27 @@ echo [OK] "ROM_Flasher_Toolkit.bat" created on Desktop!
 echo.
 
 :: ------------------------------------------------------------------------------
-:: 11. Cleanup Temporary Downloads
+:: 10. Cleanup
 :: ------------------------------------------------------------------------------
-echo [*] Cleaning up temporary installation cache...
 del /f /q "%PT_ZIP%" >nul 2>&1
 del /f /q "%USB_ZIP%" >nul 2>&1
 if exist "%USB_DIR%" rmdir /s /q "%USB_DIR%" >nul 2>&1
-if exist "%EXTRA_DIR%" rmdir /s /q "%EXTRA_DIR%" >nul 2>&1
 
 :: ------------------------------------------------------------------------------
-:: 12. Completion Summary
+:: 11. Completion
 :: ------------------------------------------------------------------------------
 echo.
 color 0a
 echo ==============================================================================
-echo                      INSTALLATION ^& UPGRADE COMPLETE!
+echo                      INSTALLATION ^& UPGRADE COMPLETE! (v4.0)
 echo ==============================================================================
 echo  [+] Latest Platform Tools (ADB/Fastboot) active in C:\adb
 echo  [+] Safe System PATH Integration complete (Accessible in ANY folder)
 echo  [+] Universal Android WinUSB Drivers registered in Windows DriverStore
 echo  [+] Official Samsung Mobile Drivers configured
-echo  [+] MTK ^& Qualcomm 9008 EDL driver protocols prepared
+echo  [+] Dual-Slot (Slot A/B) switcher ^& 1-Click Root Flasher active
 echo  [+] Interactive "ROM_Flasher_Toolkit.bat" generated on Desktop
 echo ==============================================================================
 echo.
-set /p testRun=Do you want to test ADB and Fastboot right now? (Y/N): 
-if /i "%testRun%"=="Y" (
-    cls
-    echo [*] Testing ADB version:
-    C:\adb\adb.exe version
-    echo.
-    echo [*] Testing Fastboot version:
-    C:\adb\fastboot.exe --version
-    echo.
-    echo [*] Checking for connected devices:
-    C:\adb\adb.exe devices
-    echo.
-    pause
-)
-
+pause
 exit /b 0

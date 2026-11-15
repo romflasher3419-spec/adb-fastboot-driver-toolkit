@@ -1,5 +1,7 @@
 # ==============================================================================
-# ROM Flasher - 1-Line Universal ADB and Fastboot Driver Installer v3.0
+# ROM Flasher - 1-Line Universal ADB and Fastboot Driver Installer v4.0 Ultimate
+# Target: Windows 11 / 10 / 8.1 / 7 (x64 / x86)
+# Crafted for Rohit Bhai | ROM Flasher YouTube
 # ==============================================================================
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -34,13 +36,13 @@ Write-Host @"
    ██╔══██╗██║   ██║██║╚██╔╝██║    ██╔══╝  ██║     ██╔══██║╚════██║██╔══██║
    ██║  ██║╚██████╔╝██║ ╚═╝ ██║    ██║     ███████╗██║  ██║███████║██║  ██║
    ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-                ULTIMATE DRIVER & ADB SETUP v3.0 [PRO]
+             ULTIMATE DRIVER & ADB SETUP v4.0 [PRO ULTIMATE]
                         Crafted for Rohit Bhai
 ========================================================================================
 "@ -ForegroundColor Cyan
 
 Write-Host "  [+] Supported Devices: Xiaomi, Poco, Redmi, Vivo, Oppo, Realme, OnePlus, Samsung, Google, MTK, QCOM" -ForegroundColor White
-Write-Host "  [+] Supported Modes  : ADB, Fastboot, Fastbootd, Recovery, Qualcomm 9008 EDL, MediaTek BROM" -ForegroundColor White
+Write-Host "  [+] Pro Tools Added  : Dual-Slot (A/B) Fixer, Magisk/KSU Root Flasher, Fastboot -w Data Wipe" -ForegroundColor White
 Write-Host ""
 
 $WorkDir = Join-Path $env:TEMP "ROM_Flasher_Setup"
@@ -53,7 +55,6 @@ if (-not (Test-Path $WorkDir)) {
 # -------------------------------------------------------------------------
 Write-Host "[1/6] Checking System Environment..." -ForegroundColor Cyan
 
-# Test connectivity
 $hasNet = $false
 try {
     $tcp = New-Object System.Net.Sockets.TcpClient
@@ -74,7 +75,6 @@ if (-not $hasNet) {
 }
 Write-Host "  [OK] Network connection verified!" -ForegroundColor Green
 
-# Check Secure Boot status
 $sbEnabled = $false
 try {
     if (Confirm-SecureBootUEFI) { $sbEnabled = $true }
@@ -127,7 +127,6 @@ if ($paths -notcontains "C:\adb") {
     Write-Host "  [OK] C:\adb is already present in System PATH." -ForegroundColor Green
 }
 
-# Broadcast WM_SETTINGCHANGE so all windows pick up the new PATH immediately
 Add-Type -TypeDefinition @"
 using System;
 using System.Runtime.InteropServices;
@@ -138,8 +137,6 @@ public class Win32Helper {
 "@ -ErrorAction SilentlyContinue 2>$null
 $lpdwResult = [UIntPtr]::Zero
 [Win32Helper]::SendMessageTimeout([IntPtr]0xffff, 0x001A, [UIntPtr]::Zero, "Environment", 2, 3000, [ref]$lpdwResult) | Out-Null
-
-# Also set current session PATH
 $env:Path += ";C:\adb"
 
 # -------------------------------------------------------------------------
@@ -191,68 +188,81 @@ if ($samsungInstalled) {
 }
 
 # -------------------------------------------------------------------------
-# Step 6: Generate ROM Flasher Device Toolkit v3.0 on Desktop
+# Step 6: Generate ROM Flasher Device Toolkit v4.0 Ultimate on Desktop
 # -------------------------------------------------------------------------
-Write-Host "`n[6/6] Creating ROM Flasher Toolkit v3.0 on Desktop..." -ForegroundColor Cyan
+Write-Host "`n[6/6] Creating ROM Flasher Toolkit v4.0 Ultimate on Desktop..." -ForegroundColor Cyan
 $desktopPath = [Environment]::GetFolderPath("Desktop")
 $shortcut = Join-Path $desktopPath "ROM_Flasher_Toolkit.bat"
 
 $toolkitContent = @'
 @echo off
 chcp 65001 >nul
-title ROM Flasher - Professional Device Toolkit v3.0
+title ROM Flasher - Professional Device Toolkit v4.0 Ultimate
 color 0b
 :menu
 cls
 echo ==============================================================================
-echo           ROM FLASHER - PROFESSIONAL DEVICE TOOLKIT v3.0
+echo       ROM FLASHER - PROFESSIONAL DEVICE TOOLKIT v4.0 [ULTIMATE]
 echo                     Crafted for Rohit Bhai
 echo ==============================================================================
 echo.
 echo  --- [1] ADB STATUS & DEVICE INFO ---
-echo   1. Check Connected ADB Devices
-echo   2. View Real-Time Device Battery & Model Info
+echo   1. Check Connected ADB Devices (Detailed with Serial)
+echo   2. View Real-Time Device Battery, Model & Android Version
 echo   3. Restart ADB Server (Fix Device Not Detected)
+echo   4. Install APK directly to Device (Drag & Drop)
 echo.
-echo  --- [2] FASTBOOT & BOOTLOADER ---
-echo   4. Check Fastboot Devices
-echo   5. Check Bootloader Lock/Unlock Status
-echo   6. Check if Device is in Fastbootd (Dynamic Partitions)
+echo  --- [2] FASTBOOT, DUAL SLOTS & ROOTING ---
+echo   5. Check Fastboot Devices
+echo   6. Check Bootloader Lock/Unlock Status
+echo   7. Check if Device is in Fastbootd (Dynamic Partitions)
+echo   8. Dual Slot Fixer: Check Active Slot (A/B)
+echo   9. Switch to Slot A (fastboot set_active a)
+echo  10. Switch to Slot B (fastboot set_active b)
+echo  11. 1-Click Root Flasher (Drag & Drop boot.img / init_boot.img)
 echo.
-echo  --- [3] REBOOT CONTROLS ---
-echo   7. Reboot Device to System
-echo   8. Reboot Device to Recovery Mode
-echo   9. Reboot Device to Fastboot / Bootloader
-echo  10. Reboot Device to Fastbootd Mode (Android 10+)
-echo  11. Reboot Device to Qualcomm EDL 9008 (Dead/Unbrick Mode)
+echo  --- [3] REBOOT ENGINE ---
+echo  12. Reboot Device to System (Normal)
+echo  13. Reboot Device to Recovery Mode (TWRP/OrangeFox/Stock)
+echo  14. Reboot Device to Fastboot / Bootloader
+echo  15. Reboot Device to Fastbootd Mode (Android 10+)
+echo  16. Reboot Device to Qualcomm EDL 9008 (Dead Boot Repair)
 echo.
-echo  --- [4] FLASHING TOOLS ---
-echo  12. Sideload ROM / Update Package (adb sideload)
-echo  13. Open Elevated CMD at C:\adb
-echo  14. Driver Doctor: Open Windows Device Manager
-echo  15. Exit Toolkit
+echo  --- [4] FLASHING UTILITIES ---
+echo  17. Factory Reset / Wipe Data (fastboot -w / unbrick bootloop)
+echo  18. Sideload ROM / Update Package (adb sideload)
+echo  19. Open Elevated CMD at C:\adb
+echo  20. Driver Doctor: Open Windows Device Manager
+echo  21. Exit Toolkit
 echo ==============================================================================
 echo.
-set /p choice="Enter your choice (1-15): "
+set /p choice="Enter your choice (1-21): "
 if "%choice%"=="1" ( cls & echo [*] Checking ADB Devices... & adb devices -l & echo. & pause & goto menu )
-if "%choice%"=="2" ( cls & echo [*] Fetching Device Info... & adb shell getprop ro.product.model & adb shell dumpsys battery & echo. & pause & goto menu )
+if "%choice%"=="2" ( cls & echo [*] Fetching Device Info... & echo Model: & adb shell getprop ro.product.model & echo Android Ver: & adb shell getprop ro.build.version.release & echo Battery: & adb shell dumpsys battery & echo. & pause & goto menu )
 if "%choice%"=="3" ( cls & echo [*] Restarting ADB Server... & adb kill-server & adb start-server & echo [OK] Server reset! & pause & goto menu )
-if "%choice%"=="4" ( cls & echo [*] Checking Fastboot Devices... & fastboot devices & echo. & pause & goto menu )
-if "%choice%"=="5" ( cls & echo [*] Checking Bootloader Status... & fastboot oem device-info 2>&1 & fastboot getvar unlocked 2>&1 & echo. & pause & goto menu )
-if "%choice%"=="6" ( cls & echo [*] Checking Fastbootd userspace... & fastboot getvar is-userspace 2>&1 & echo. & pause & goto menu )
-if "%choice%"=="7" ( cls & echo [*] Rebooting to System... & adb reboot 2>nul || fastboot reboot & pause & goto menu )
-if "%choice%"=="8" ( cls & echo [*] Rebooting to Recovery... & adb reboot recovery 2>nul || fastboot reboot recovery & pause & goto menu )
-if "%choice%"=="9" ( cls & echo [*] Rebooting to Bootloader... & adb reboot bootloader & pause & goto menu )
-if "%choice%"=="10" ( cls & echo [*] Rebooting to Fastbootd... & fastboot reboot fastboot & pause & goto menu )
-if "%choice%"=="11" ( cls & echo [*] Rebooting to EDL 9008... & adb reboot edl 2>nul || fastboot oem edl 2>nul || fastboot reboot-edl 2>nul & pause & goto menu )
-if "%choice%"=="12" ( cls & set /p zip="Drag and Drop ROM zip here: " & adb sideload %zip% & pause & goto menu )
-if "%choice%"=="13" ( start cmd.exe /k "cd /d C:\adb" & goto menu )
-if "%choice%"=="14" ( start devmgmt.msc & goto menu )
-if "%choice%"=="15" ( exit )
+if "%choice%"=="4" ( cls & set /p apk="Drag and Drop APK file here: " & adb install -r %apk% & pause & goto menu )
+if "%choice%"=="5" ( cls & echo [*] Checking Fastboot Devices... & fastboot devices & echo. & pause & goto menu )
+if "%choice%"=="6" ( cls & echo [*] Checking Bootloader Status... & fastboot oem device-info 2>&1 & fastboot getvar unlocked 2>&1 & echo. & pause & goto menu )
+if "%choice%"=="7" ( cls & echo [*] Checking Fastbootd userspace... & fastboot getvar is-userspace 2>&1 & echo. & pause & goto menu )
+if "%choice%"=="8" ( cls & echo [*] Current Active Slot: & fastboot getvar current-slot 2>&1 & echo. & pause & goto menu )
+if "%choice%"=="9" ( cls & echo [*] Switching to Slot A... & fastboot set_active a & echo. & pause & goto menu )
+if "%choice%"=="10" ( cls & echo [*] Switching to Slot B... & fastboot set_active b & echo. & pause & goto menu )
+if "%choice%"=="11" ( cls & set /p bimg="Drag and Drop boot.img or init_boot.img here: " & echo Flashing boot... & fastboot flash boot %bimg% 2>nul || fastboot flash init_boot %bimg% & echo. & pause & goto menu )
+if "%choice%"=="12" ( cls & echo [*] Rebooting to System... & adb reboot 2>nul || fastboot reboot & pause & goto menu )
+if "%choice%"=="13" ( cls & echo [*] Rebooting to Recovery... & adb reboot recovery 2>nul || fastboot reboot recovery & pause & goto menu )
+if "%choice%"=="14" ( cls & echo [*] Rebooting to Bootloader... & adb reboot bootloader & pause & goto menu )
+if "%choice%"=="15" ( cls & echo [*] Rebooting to Fastbootd... & fastboot reboot fastboot & pause & goto menu )
+if "%choice%"=="16" ( cls & echo [*] Rebooting to EDL 9008... & adb reboot edl 2>nul || fastboot oem edl 2>nul || fastboot reboot-edl 2>nul & pause & goto menu )
+if "%choice%"=="17" ( cls & echo [!] WARNING: This will wipe all user data to fix bootloop! & set /p confirm="Are you sure? (Y/N): " & if /i "%confirm%"=="Y" ( fastboot -w 2>nul || fastboot erase userdata ) & pause & goto menu )
+if "%choice%"=="18" ( cls & set /p zip="Drag and Drop ROM zip here: " & adb sideload %zip% & pause & goto menu )
+if "%choice%"=="19" ( start cmd.exe /k "cd /d C:\adb" & goto menu )
+if "%choice%"=="20" ( start devmgmt.msc & goto menu )
+if "%choice%"=="21" ( exit )
 goto menu
 '@
 
-$toolkitContent | Set-Content -Path $shortcut -Encoding UTF8
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($shortcut, $toolkitContent, $utf8NoBom)
 Write-Host "  [OK] ROM_Flasher_Toolkit.bat generated on your Desktop!" -ForegroundColor Green
 
 # Cleanup temp files
@@ -260,13 +270,14 @@ Remove-Item -Path $WorkDir -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host ""
 Write-Host "========================================================================================" -ForegroundColor Green
-Write-Host "                      SETUP & UPGRADE COMPLETED SUCCESSFULLY!                           " -ForegroundColor Green
+Write-Host "                  SETUP & UPGRADE COMPLETED SUCCESSFULLY! (v4.0)                        " -ForegroundColor Green
 Write-Host "========================================================================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "  * ADB & Fastboot installed in C:\adb" -ForegroundColor White
 Write-Host "  * System PATH updated (run 'adb' or 'fastboot' in ANY folder)" -ForegroundColor White
 Write-Host "  * Universal Android WinUSB Drivers active" -ForegroundColor White
 Write-Host "  * Samsung Mobile Drivers active" -ForegroundColor White
+Write-Host "  * Dual-Slot (Slot A/B) switcher & 1-Click Root Flasher active" -ForegroundColor White
 Write-Host "  * Interactive 'ROM_Flasher_Toolkit.bat' on your Desktop" -ForegroundColor White
 Write-Host ""
 Write-Host "  Crafted for Rohit Bhai | ROM Flasher" -ForegroundColor Cyan
