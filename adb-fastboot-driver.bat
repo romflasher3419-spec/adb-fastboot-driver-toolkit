@@ -34,7 +34,7 @@ echo   ██████╔╝██║   ██║██╔████╔█�
 echo   ██╔══██╗██║   ██║██║╚██╔╝██║    ██╔══╝  ██║     ██╔══██║╚════██║██╔══██║
 echo   ██║  ██║╚██████╔╝██║ ╚═╝ ██║    ██║     ███████╗██║  ██║███████║██║  ██║
 echo   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-echo                  ULTIMATE DRIVER ^& ADB SETUP v4.0 [PRO]
+echo                  ULTIMATE DRIVER + ADB SETUP v4.0 [PRO]
 echo                        Crafted for Rohit Bhai
 echo ==============================================================================
 echo  Support: Xiaomi, Poco, Redmi, Vivo, Oppo, Realme, OnePlus, Samsung, MTK, QCOM
@@ -77,7 +77,7 @@ echo.
 :: ------------------------------------------------------------------------------
 :: 4. Secure Boot & Driver Signature Handling
 :: ------------------------------------------------------------------------------
-echo [*] Inspecting System Security ^& Driver Signature Policy...
+echo [*] Inspecting System Security + Driver Signature Policy...
 powershell -NoProfile -Command "try { if (Confirm-SecureBootUEFI) { exit 2 } else { exit 0 } } catch { exit 1 }" >nul 2>&1
 set "SB_STATUS=%errorlevel%"
 
@@ -95,7 +95,7 @@ echo.
 :: ------------------------------------------------------------------------------
 :: 5. Setup Platform Tools (ADB & Fastboot) to C:\adb
 :: ------------------------------------------------------------------------------
-echo [*] Setting up latest Google Platform Tools (ADB ^& Fastboot)...
+echo [*] Setting up latest Google Platform Tools (ADB + Fastboot)...
 if not exist "C:\adb" mkdir "C:\adb" >nul 2>&1
 
 set "PT_ZIP=%TEMP%\platform-tools-latest.zip"
@@ -122,7 +122,7 @@ if %errorlevel% equ 0 (
 )
 
 if exist "C:\adb\adb.exe" (
-    echo [OK] ADB ^& Fastboot successfully placed in C:\adb
+    echo [OK] ADB + Fastboot successfully placed in C:\adb
 ) else (
     echo [!] Warning: Could not locate adb.exe in C:\adb
 )
@@ -215,20 +215,20 @@ echo       ROM FLASHER - PROFESSIONAL DEVICE TOOLKIT v4.0 [ULTIMATE]
 echo                     Crafted for Rohit Bhai
 echo ==============================================================================
 echo.
-echo  --- [1] ADB STATUS ^& DEVICE INFO ---
+echo  --- [1] ADB STATUS + DEVICE INFO ---
 echo   1. Check Connected ADB Devices (Detailed with Serial)
-echo   2. View Real-Time Device Battery, Model ^& Android Version
+echo   2. View Real-Time Device Battery, Model + Android Version
 echo   3. Restart ADB Server (Fix Device Not Detected)
-echo   4. Install APK directly to Device (Drag ^& Drop)
+echo   4. Install APK directly to Device [Drag and Drop]
 echo.
-echo  --- [2] FASTBOOT, DUAL SLOTS ^& ROOTING ---
+echo  --- [2] FASTBOOT, DUAL SLOTS + ROOTING ---
 echo   5. Check Fastboot Devices
 echo   6. Check Bootloader Lock/Unlock Status
 echo   7. Check if Device is in Fastbootd (Dynamic Partitions)
 echo   8. Dual Slot Fixer: Check Active Slot (A/B)
 echo   9. Switch to Slot A (fastboot set_active a)
 echo  10. Switch to Slot B (fastboot set_active b)
-echo  11. 1-Click Root Flasher (Drag ^& Drop boot.img / init_boot.img)
+echo  11. 1-Click Root Flasher [Drag and Drop boot.img / init_boot.img]
 echo.
 echo  --- [3] REBOOT ENGINE ---
 echo  12. Reboot Device to System (Normal)
@@ -286,13 +286,13 @@ if exist "%USB_DIR%" rmdir /s /q "%USB_DIR%" >nul 2>&1
 echo.
 color 0a
 echo ==============================================================================
-echo                      INSTALLATION ^& UPGRADE COMPLETE! (v4.0)
+echo                      INSTALLATION + UPGRADE COMPLETE! (v4.0)
 echo ==============================================================================
 echo  [+] Latest Platform Tools (ADB/Fastboot) active in C:\adb
 echo  [+] Safe System PATH Integration complete (Accessible in ANY folder)
 echo  [+] Universal Android WinUSB Drivers registered in Windows DriverStore
 echo  [+] Official Samsung Mobile Drivers configured
-echo  [+] Dual-Slot (Slot A/B) switcher ^& 1-Click Root Flasher active
+echo  [+] Dual-Slot (Slot A/B) switcher + 1-Click Root Flasher active
 echo  [+] Interactive "ROM_Flasher_Toolkit.bat" generated on Desktop
 echo ==============================================================================
 echo.

@@ -1,4 +1,4 @@
-# ==============================================================================
+﻿# ==============================================================================
 # ROM Flasher - 1-Line Universal ADB and Fastboot Driver Installer v4.0 Ultimate
 # Target: Windows 11 / 10 / 8.1 / 7 (x64 / x86)
 # Crafted for Rohit Bhai | ROM Flasher YouTube
@@ -206,20 +206,20 @@ echo       ROM FLASHER - PROFESSIONAL DEVICE TOOLKIT v4.0 [ULTIMATE]
 echo                     Crafted for Rohit Bhai
 echo ==============================================================================
 echo.
-echo  --- [1] ADB STATUS & DEVICE INFO ---
+echo  --- [1] ADB STATUS + DEVICE INFO ---
 echo   1. Check Connected ADB Devices (Detailed with Serial)
-echo   2. View Real-Time Device Battery, Model & Android Version
+echo   2. View Real-Time Device Battery, Model + Android Version
 echo   3. Restart ADB Server (Fix Device Not Detected)
-echo   4. Install APK directly to Device (Drag & Drop)
+echo   4. Install APK directly to Device [Drag and Drop]
 echo.
-echo  --- [2] FASTBOOT, DUAL SLOTS & ROOTING ---
+echo  --- [2] FASTBOOT, DUAL SLOTS + ROOTING ---
 echo   5. Check Fastboot Devices
 echo   6. Check Bootloader Lock/Unlock Status
 echo   7. Check if Device is in Fastbootd (Dynamic Partitions)
 echo   8. Dual Slot Fixer: Check Active Slot (A/B)
 echo   9. Switch to Slot A (fastboot set_active a)
 echo  10. Switch to Slot B (fastboot set_active b)
-echo  11. 1-Click Root Flasher (Drag & Drop boot.img / init_boot.img)
+echo  11. 1-Click Root Flasher [Drag and Drop boot.img / init_boot.img]
 echo.
 echo  --- [3] REBOOT ENGINE ---
 echo  12. Reboot Device to System (Normal)
