@@ -1,13 +1,6 @@
-﻿<#
-.SYNOPSIS
-    ROM Flasher - 1-Line Universal ADB & Fastboot Driver Installer v3.0
-.DESCRIPTION
-    Instantly installs latest Android Platform Tools (ADB & Fastboot), integrates C:\adb
-    safely into Windows System PATH, registers Universal Android WinUSB drivers,
-    installs Samsung USB drivers, and generates the ROM Flasher Device Toolkit on Desktop.
-.EXAMPLE
-    irm https://raw.githubusercontent.com/romflasher3419-spec/adb-fastboot-driver-toolkit/main/install.ps1 | iex
-#>
+# ==============================================================================
+# ROM Flasher - 1-Line Universal ADB and Fastboot Driver Installer v3.0
+# ==============================================================================
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $ErrorActionPreference = "Continue"
