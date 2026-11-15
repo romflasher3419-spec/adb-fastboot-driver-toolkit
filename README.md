@@ -1,74 +1,63 @@
-# 📱 ROM Flasher - Ultimate Driver & ADB Setup v4.0 [Pro Ultimate]
+# 🚀 Universal Phone Driver & ADB Platform Tools Suite v5.0
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Platform-Windows%2011%20%7C%2010%20%7C%208.1%20%7C%207-blue?style=for-the-badge&logo=windows" alt="Platform" />
-  <img src="https://img.shields.io/badge/Author-Rohit%20Bhai%20%7C%20ROM%20Flasher-red?style=for-the-badge&logo=youtube" alt="Author" />
-  <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
-  <img src="https://img.shields.io/badge/Version-v4.0%20Ultimate-green?style=for-the-badge" alt="Version" />
-</p>
-
-> **The ultimate Android Flashing & Driver setup tool for Windows. Automatically installs latest Platform Tools (ADB/Fastboot), configures System PATH safely without truncation, registers Universal Android WinUSB drivers, installs Samsung mobile drivers, and generates a 21-tool Technician Device Toolkit on your Desktop with Dual-Slot Switcher and 1-Click Root Flasher.**
+> **Crafted for Rohit Bhai | ROM Flasher**  
+> Complete Windows DriverStore integration for **Every Phone in the World**. No desktop clutter, no interactive menus — pure automated driver deployment.
 
 ---
 
-## ⚡ 1-Line Universal Web Installer
+## ⚡ 1-Line Installation (PowerShell)
 
-Open **PowerShell** (Run as Administrator or Normal) and paste this single command:
+Open **PowerShell** (or Administrator PowerShell) and run:
 
 ```powershell
 irm https://raw.githubusercontent.com/romflasher3419-spec/adb-fastboot-driver-toolkit/main/install.ps1 | iex
 ```
 
----
-
-## 🧰 What's New in v4.0 Ultimate Edition (21 Essential Tools)
-
-Once installed, a shortcut named `ROM_Flasher_Toolkit.bat` is created on your Desktop:
-
-| Section | Option | Utility & Description |
-| :--- | :---: | :--- |
-| **ADB & Info** | `1` | **Check ADB Devices:** Detailed list of connected ADB devices with serial numbers. |
-| | `2` | **Real-Time Device Info:** Model, Android version, and live battery level. |
-| | `3` | **Reset ADB Server:** Kills and restarts the ADB daemon to resolve offline devices. |
-| | `4` | **Install APK:** Drag & drop any `.apk` file to install directly to device. |
-| **Fastboot & Slots** | `5` | **Check Fastboot Devices:** Verifies bootloader connection. |
-| | `6` | **Bootloader Lock Status:** Checks if bootloader is locked or unlocked. |
-| | `7` | **Fastbootd Userspace:** Checks if device is in modern fastbootd mode. |
-| | `8` | **Dual-Slot Check:** Queries active slot (`current-slot`). |
-| | `9` | **Switch to Slot A:** `fastboot set_active a` to recover slot bootloops. |
-| | `10` | **Switch to Slot B:** `fastboot set_active b` to recover slot bootloops. |
-| | `11` | **1-Click Root Flasher:** Drag & drop `boot.img` or `init_boot.img` to flash Magisk/KernelSU. |
-| **Reboots** | `12` | **Reboot to System:** Reboots from ADB or Fastboot straight back to Android. |
-| | `13` | **Reboot to Recovery:** Reboots to TWRP, OrangeFox, or Stock Recovery. |
-| | `14` | **Reboot to Bootloader:** Reboots device into Fastboot mode. |
-| | `15` | **Reboot to Fastbootd:** Reboots into Android 10+ userspace fastboot. |
-| | `16` | **Reboot to EDL 9008:** Reboots Qualcomm devices to Emergency Download (EDL 9008) mode. |
-| **Utilities** | `17` | **Factory Reset / Wipe:** Fastboot `-w` / erase userdata to fix bootloops. |
-| | `18` | **Sideload ROM:** Drag & drop ROM update zip to flash via `adb sideload`. |
-| | `19` | **Open CMD at C:\adb:** Launches elevated command prompt inside `C:\adb`. |
-| | `20` | **Driver Doctor:** 1-click open of Windows Device Manager (`devmgmt.msc`). |
-| | `21` | **Exit** |
+Or clone the repository and run `adb-fastboot-driver.bat` by double-clicking.
 
 ---
 
-## 📱 Supported Device Brands
+## 📱 Hardware & Chipset Coverage
 
-* **Xiaomi, Redmi, POCO**
-* **Samsung Galaxy**
-* **Vivo & iQOO**
-* **Oppo & Realme**
-* **OnePlus**
-* **Google Pixel**
-* **Motorola**
-* **Nothing Phone**
-* **Infinix, Tecno, itel (Transsion MTK/Unisoc)**
-* **Qualcomm Snapdragon (EDL 9008)**
-* **MediaTek (BROM / Preloader VCOM)**
+This installer registers all certified drivers directly into the **Windows DriverStore** (`C:\Windows\System32\DriverStore`). The millisecond you connect any phone via USB, Windows automatically matches the hardware ID and binds the driver instantly without yellow exclamation marks (`!`).
+
+| Chipset / Brand | Modes Supported | Hardware IDs / Ports |
+|---|---|---|
+| **Qualcomm (Snapdragon)** | EDL 9008, 900E, Diag, Modem | `VID_05C6&PID_9008`, `PID_900E`, `PID_901D`, `PID_9091` |
+| **MediaTek (Dimensity & Helio)** | PreLoader, BROM, DA USB VCOM | `VID_0E8D&PID_2000`, `PID_0003`, `PID_2001` |
+| **Samsung Electronics** | MTP, Composite, Modem, Odin Download Mode | `VID_04E8&PID_685D`, `PID_6860`, `PID_685E` |
+| **Unisoc / Spreadtrum (SPD)** | Download Mode, Diag, USB-to-Serial | `VID_1782&PID_4D00`, `PID_4D01`, `PID_5D24` |
+| **Xiaomi / Poco / Redmi / Blackshark** | Fastboot, Fastbootd, ADB | `VID_2717` |
+| **Vivo / iQOO** | Fastboot, Fastbootd, ADB | `VID_2B4C`, `VID_0BB4` |
+| **Oppo / Realme** | Fastboot, Fastbootd, ADB | `VID_22D9` |
+| **OnePlus** | Fastboot, Fastbootd, ADB | `VID_2A70` |
+| **Motorola** | Fastboot, Fastbootd, ADB | `VID_22B8` |
+| **Google Pixel / Nexus** | Fastboot, Bootloader, ADB | `VID_18D1` |
+| **Nothing Phone (1 / 2 / 2a)** | Fastboot, ADB | `VID_2A70` |
+| **Transsion (Infinix, Tecno, itel)** | Fastboot, Preloader, ADB | `VID_1782`, `VID_2A70` |
+| **Asus (ROG / Zenfone)** | Fastboot, ADB | `VID_0B05` |
+| **Huawei / Honor** | Fastboot, ADB | `VID_12D1` |
 
 ---
 
-## 👨‍💻 Author & Credits
+## 🛠 Features
 
-* **Tool Developer:** Rohit Bhai (ROM Flasher YouTube)
-* **Official Google Platform Tools:** [developer.android.com](https://developer.android.com/tools/releases/platform-tools)
-* **Samsung USB Drivers:** [developer.samsung.com](https://developer.samsung.com/mobile/android-usb-driver.html)
+- **100% Clean**: Zero desktop shortcuts created. No clutter.
+- **Permanent Windows Integration**: Drivers reside in Windows DriverStore (`pnputil`), matching any device immediately on USB plug-in.
+- **Latest Google Platform-Tools**: Deploys `adb.exe` and `fastboot.exe` to `C:\adb` with safe Registry PATH expansion (zero truncation).
+- **Core Isolation / Memory Integrity Compatible**: Microsoft WHQL-signed drivers.
+- **No Complex Menus**: Automated background execution.
+
+---
+
+## 🧹 Uninstallation
+
+To cleanly reset `C:\adb` and environment paths:
+
+```powershell
+irm https://raw.githubusercontent.com/romflasher3419-spec/adb-fastboot-driver-toolkit/main/uninstall.ps1 | iex
+```
+
+---
+
+**Crafted with ❤️ for Rohit Bhai | ROM Flasher**

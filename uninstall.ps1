@@ -1,10 +1,8 @@
-<#
-.SYNOPSIS
-    ROM Flasher - Uninstaller & Clean Reset
-.DESCRIPTION
-    Safely removes C:\adb from the system, cleans the System PATH environment variable,
-    and removes the Desktop Toolkit shortcut.
-#>
+# ==============================================================================
+# ROM Flasher - Universal Phone Driver and ADB Uninstaller
+# Target: Windows 11 / Windows 10
+# Crafted for Rohit Bhai
+# ==============================================================================
 
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
@@ -14,7 +12,7 @@ if (-not $isAdmin) {
 
 Clear-Host
 Write-Host "====================================================================" -ForegroundColor Yellow
-Write-Host "        ROM FLASHER - ADB & FASTBOOT DRIVER UNINSTALLER            " -ForegroundColor Yellow
+Write-Host "       ROM FLASHER - ADB AND PHONE DRIVER CLEAN RESET               " -ForegroundColor Yellow
 Write-Host "====================================================================" -ForegroundColor Yellow
 Write-Host ""
 
@@ -30,21 +28,38 @@ $paths = $currentPath -split ";" | Where-Object { $_ -ne "" -and $_ -ne "C:\adb"
 $newPath = $paths -join ";"
 Set-ItemProperty -Path $regKey -Name "Path" -Value $newPath
 
+# Broadcast environment change
+Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public class WinResetHelper {
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
+}
+"@ -ErrorAction SilentlyContinue 2>$null
+$lpdwResult = [UIntPtr]::Zero
+[WinResetHelper]::SendMessageTimeout([IntPtr]0xffff, 0x001A, [UIntPtr]::Zero, "Environment", 2, 3000, [ref]$lpdwResult) | Out-Null
+
 # 3. Remove C:\adb Directory
 if (Test-Path "C:\adb") {
     Write-Host "[*] Deleting C:\adb folder..." -ForegroundColor Cyan
     Remove-Item -Path "C:\adb" -Recurse -Force -ErrorAction SilentlyContinue
 }
 
-# 4. Remove Desktop Toolkit Shortcut
-$desktop = [Environment]::GetFolderPath("Desktop")
-$shortcut = Join-Path $desktop "ROM_Flasher_Toolkit.bat"
-if (Test-Path $shortcut) {
-    Write-Host "[*] Removing Desktop shortcut..." -ForegroundColor Cyan
-    Remove-Item -Path $shortcut -Force -ErrorAction SilentlyContinue
+# 4. Remove any desktop shortcut if lingering
+$desktopLocations = @(
+    [Environment]::GetFolderPath("Desktop"),
+    (Join-Path $env:USERPROFILE "Desktop"),
+    (Join-Path $env:USERPROFILE "OneDrive\Desktop")
+)
+foreach ($desk in $desktopLocations) {
+    if (Test-Path "$desk\ROM_Flasher_Toolkit.bat") {
+        Write-Host "[*] Removing Desktop shortcut from $desk..." -ForegroundColor Cyan
+        Remove-Item "$desk\ROM_Flasher_Toolkit.bat" -Force -ErrorAction SilentlyContinue
+    }
 }
 
 Write-Host ""
-Write-Host "[OK] ADB & Fastboot uninstalled cleanly!" -ForegroundColor Green
+Write-Host "[OK] ADB and paths cleaned up successfully!" -ForegroundColor Green
 Write-Host "Press any key to exit..."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
